@@ -1,6 +1,7 @@
 import Head from "next/head";
-import Header from "../components/Header";
+import React from "react";
 import Footer from "../components/Footer";
+import { Generate } from "../components/Generate";
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <Header title="Welcome to my cryptoadress.io!" />
+        <Generate />
       </main>
 
       <Footer />
