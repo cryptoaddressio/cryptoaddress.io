@@ -1,3 +1,7 @@
-export default function Header({ title }) {
-  return <h1 className="title">{title}</h1>
+export interface HeaderProps {
+  title: string;
+}
+
+export default function Header({ title }: HeaderProps) {
+  return <h1 className="title">{title}</h1>;
 }
