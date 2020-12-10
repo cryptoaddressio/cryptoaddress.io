@@ -9,7 +9,6 @@ export type Wallet = {
 };
 
 const generateRandomMnemonicPhrase = (): string => {
-  console.log(bip39);
   const mnemonic = bip39.generateMnemonic(256);
   return mnemonic;
 }
