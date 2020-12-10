@@ -9,13 +9,15 @@ export type Wallet = {
 export const WalletGenerator = {
   bitcoin: (): Wallet | null => {
     const keyPair = bitcoinjs.ECPair.makeRandom();
+    // This is technically correct, but it is not a standard that most wallets use
+    // We should use Mnemonic 24 and encode with base58
+    const privateKey = keyPair.privateKey?.toString('base64');
     const result = bitcoinjs.payments.p2pkh({ pubkey: keyPair.publicKey });
 
-    if (result.address) {
-      // TODO: Figure out how to get the private key
+    if (result.address && privateKey) {
       return {
         address: result.address,
-        privateKey: "?",
+        privateKey: privateKey,
         url: `https://www.blockchain.com/btc/address/${result.address}`,
       };
     }
