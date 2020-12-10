@@ -31,6 +31,7 @@ export const Generate = () => {
 							</a>
 						</p>
 						<p>{`Private Key: ${wallet.privateKey}`}</p>
+						<p>{`Backup phrase: ${wallet.mnemonic}`}</p>
 					</div>
 				)}
 			</div>
