@@ -11,7 +11,7 @@ export default function Home() {
 
       <main>
         <a href="https://freebitco.in/?r=39598228" target="blank">
-          Earn free Bitcoin with daily interest!
+          Earn free Bitcoin with daily interest! Click here!
         </a>
       </main>
 
