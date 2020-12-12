@@ -1,5 +1,6 @@
 import Head from "next/head";
 import React from "react";
+import { Generate } from "../components/Generate";
 
 export default function Home() {
   return (
@@ -10,9 +11,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <a href="https://freebitco.in/?r=39598228" target="blank">
-          Earn free Bitcoin with daily interest!
-        </a>
+        <Generate />
       </main>
 
       {/* <Footer /> */}

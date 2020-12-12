@@ -9,6 +9,7 @@
     "export": "next export"
   },
   "dependencies": {
+    "bip32": "^2.0.6",
     "bip39": "^3.0.3",
     "bitcoinjs-lib": "^5.2.0",
     "next": "10.0.1",

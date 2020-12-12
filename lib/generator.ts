@@ -1,36 +1,53 @@
 import * as bitcoinjs from "bitcoinjs-lib";
 import * as bip39 from "bip39";
+import * as bip32 from "bip32";
+import { BIP32Interface } from "bip32";
 
 export type Wallet = {
-  mnemonic: string,
+  mnemonic: string;
   address: string;
   privateKey: string;
-  url: string;
 };
 
-const generateRandomMnemonicPhrase = (): string => {
-  const mnemonic = bip39.generateMnemonic(256);
-  return mnemonic;
-}
+const getAddress = (node: BIP32Interface): string => {
+  return bitcoinjs.payments.p2pkh({ pubkey: node.publicKey }).address || "";
+};
+
+const generateMnemonic = (): string => {
+  return bip39.generateMnemonic(256);
+};
+
+const getRootFromMnemonic = async (
+  mnemonic: string,
+): Promise<BIP32Interface> => {
+  return bip39.mnemonicToSeed(mnemonic).then((seed) => {
+    return bip32.fromSeed(seed, bitcoinjs.networks.bitcoin);
+  });
+};
+
+const getFirstNode = (root: BIP32Interface): BIP32Interface => {
+  return root.derivePath("m/44'/0'/0'/0/0");
+};
+
+const generateBitcoinWallet = async (): Promise<Wallet> => {
+  const mnemonic = generateMnemonic();
+  const root = await getRootFromMnemonic(mnemonic);
+  const node = getFirstNode(root);
+
+  return {
+    address: getAddress(node),
+    privateKey: node.toWIF() || "",
+    mnemonic: mnemonic,
+  };
+};
 
 export const WalletGenerator = {
-  bitcoin: (): Wallet | null => {
-    const mnemonic = generateRandomMnemonicPhrase();
-    const keyPair = bitcoinjs.ECPair.makeRandom();
-    // This is technically correct, but it is not a standard that most wallets use
-    // We should use Mnemonic 24 and encode with base58
-    const privateKey = keyPair.privateKey?.toString('base64');
-    const result = bitcoinjs.payments.p2pkh({ pubkey: keyPair.publicKey });
-
-    if (result.address && privateKey) {
-      return {
-        mnemonic: mnemonic,
-        address: result.address,
-        privateKey: privateKey,
-        url: `https://www.blockchain.com/btc/address/${result.address}`,
-      };
-    }
-
-    return null;
+  bitcoin: async (): Promise<Wallet> => {
+    const bitcoinPack = await generateBitcoinWallet();
+    return {
+      mnemonic: bitcoinPack.mnemonic,
+      address: bitcoinPack.address,
+      privateKey: bitcoinPack.privateKey,
+    };
   },
 };
