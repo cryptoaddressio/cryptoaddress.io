@@ -1,9 +1,13 @@
 .btn {
-  width: 200px;
-  height: 100px;
-  background-color: #ef8f1c;
-  color: white;
   border: none;
+  background: white;
   font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.wrapper {
+  width: 380px;
+  padding: 20px;
   border-radius: 5px;
 }

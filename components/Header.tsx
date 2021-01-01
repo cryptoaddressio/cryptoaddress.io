@@ -2,6 +2,13 @@ export interface HeaderProps {
   title: string;
 }
 
-export default function Header({ title }: HeaderProps) {
-  return <h1 className="title">{title}</h1>;
-}
+export const Header: React.FC = () => {
+  return (
+    <h1
+      className="title"
+      style={{ fontFamily: "Consolas", fontWeight: "lighter" }}
+    >
+      cryptoaddress.io
+    </h1>
+  );
+};
