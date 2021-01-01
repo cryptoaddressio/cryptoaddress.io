@@ -1,7 +1,5 @@
 import * as React from "react";
 
-interface Props {}
-
 export const BitcoinLogo: React.FC = (props) => {
   return (
     <svg
